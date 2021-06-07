@@ -1,9 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { useEffect } from "react";
+import logo from "./logo.svg";
+import { Counter } from "./features/counter/Counter";
+import "./App.css";
+import axios from "utils/axios";
 
 function App() {
+  useEffect(() => {
+    axios.get("/api/notifications").then((response) => {
+      console.log("axios response", response);
+    });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
