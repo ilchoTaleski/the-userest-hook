@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { reducers as songsReducers } from "slices/songs";
-import { reducers as productsReducers } from "slices/products";
+import { reducers as productsReducers } from "slices/playlists";
 
 export const store = configureStore({
   reducer: {
