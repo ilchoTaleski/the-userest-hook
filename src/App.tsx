@@ -1,21 +1,25 @@
 import { useEffect } from "react";
 import logo from "./logo.svg";
-import { Counter } from "./features/counter/Counter";
 import "./App.css";
-import axios from "utils/axios";
+import { useRest } from "hooks/useRest";
 
 function App() {
+  const { songs } = useRest();
+
   useEffect(() => {
-    axios.get("/api/notifications").then((response) => {
-      console.log("axios response", response);
-    });
+    // songs.getMany();
+    // songs.getOne("5");
+    // songs.post({ id: 5, singer: "Sam Smith", title: "Stay with me" });
+    // songs.delete("2");
+    // songs.patch({ singer: "damian" }, "2");
+    // songs.getMany();
+    // postSongs({ id: 6, singer: "", title: "" });
   }, []);
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>

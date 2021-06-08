@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from "utils/axios";
 import { RequestAgentMethod } from "models/rest-api";
 import { useAuthentication } from "./useAuthentication";
 
-const API_ENDPOINT = "";
+const API_ENDPOINT = "/api";
 
 let requestsLog = [];
 
