@@ -9,10 +9,10 @@ function App() {
   useEffect(() => {
     // songs.getMany();
     // songs.getOne("5");
-    // songs.post({ id: 5, singer: "Sam Smith", title: "Stay with me" });
+    songs.post({ id: 5, singer: "Sam Smith", title: "Stay with me" });
     // songs.delete("2");
     // songs.patch({ singer: "damian" }, "2");
-    // songs.getMany();
+    songs.getMany();
     // postSongs({ id: 6, singer: "", title: "" });
   }, []);
 

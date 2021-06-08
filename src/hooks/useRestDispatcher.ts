@@ -4,8 +4,16 @@ import { GenericActions } from "slices/generic";
 import { useExecutor } from "./useExecutor";
 import { ExecutorResponse, QueryParameters } from "models/rest-api";
 
-export type ActionMutator<P extends {}> = (data: P) => P;
+export type ActionMutator<P = {}> = (data: P) => P;
+type AnyMutator = ActionMutator<{}[]> &
+  ActionMutator<{}> &
+  ActionMutator<Partial<{}>>;
 export type MutatorMethod = "get" | "post" | "patch";
+interface Mutators<P = {}> {
+  get: ActionMutator<P[]>;
+  post: ActionMutator<P>;
+  patch: ActionMutator<Partial<P>>;
+}
 
 interface Actions<P> {
   all: GenericActions<P[]>;
@@ -19,13 +27,11 @@ export const useRestDispatcher = <P extends {}>(
   const dispatch = useDispatch();
   const executor = useExecutor(api);
 
-  const mutators = useRef<Record<MutatorMethod, ActionMutator<P | Partial<P>>>>(
-    {
-      get: null,
-      post: null,
-      patch: null,
-    }
-  );
+  const mutators = useRef<Mutators<P>>({
+    get: null,
+    post: null,
+    patch: null,
+  });
 
   useEffect(() => {
     return () => {
@@ -37,7 +43,7 @@ export const useRestDispatcher = <P extends {}>(
   const dispatchResponse = (
     response: ExecutorResponse,
     currentActions: GenericActions<P | P[]>,
-    mutator?: ActionMutator<P | Partial<P>>
+    mutator?: AnyMutator
   ) => {
     if (response.success) {
       const data = mutator ? mutator(response.data) : response.data;
@@ -48,7 +54,7 @@ export const useRestDispatcher = <P extends {}>(
   };
 
   return {
-    addMutator: (method: MutatorMethod, mutator: ActionMutator<P>) => {
+    addMutator: (method: MutatorMethod, mutator) => {
       mutators.current[method] = mutator;
     },
     methods: {
