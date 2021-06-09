@@ -1,68 +1,40 @@
-import { useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { useRest } from "hooks/useRest";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import Header from "./Navbar";
+import Home from "./Home";
+import Container from "react-bootstrap/Container";
+import classNames from "classnames";
+import Songs from "Songs";
 
 function App() {
-  const { songs } = useRest();
-
-  useEffect(() => {
-    // songs.getMany();
-    // songs.getOne("5");
-    songs.post({ id: 5, singer: "Sam Smith", title: "Stay with me" });
-    // songs.delete("2");
-    // songs.patch({ singer: "damian" }, "2");
-    songs.getMany();
-    // postSongs({ id: 6, singer: "", title: "" });
-  }, []);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Header />
+        <Container className={classNames("m-auto", "p-5")}>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => {
+                return <Redirect to="/home" />;
+              }}
+            />
+            <Route path="/home">
+              <Home />
+            </Route>
+            <Route path="/songs">
+              <Songs />
+            </Route>
+          </Switch>
+        </Container>
+      </div>
+    </Router>
   );
 }
 

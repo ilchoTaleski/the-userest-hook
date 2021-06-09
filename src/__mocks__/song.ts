@@ -37,7 +37,8 @@ mock.onPost("/api/songs").reply(function (config) {
   // the actual id can be grabbed from config.url
 
   const song = JSON.parse(config.data);
-  songs.push(song);
+  const lastSong = songs[songs.length - 1];
+  songs.push({ ...song, id: lastSong.id + 1 });
 
   return [200, {}];
 });

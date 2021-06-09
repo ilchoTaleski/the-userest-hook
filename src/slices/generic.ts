@@ -8,7 +8,7 @@ import {
 } from "@reduxjs/toolkit";
 
 export enum StateStatus {
-  Loading,
+  Loading = 0,
   Error,
   Done,
 }
